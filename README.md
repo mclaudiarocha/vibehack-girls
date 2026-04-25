@@ -56,7 +56,7 @@ Para a construção da plataforma e de sua identidade, utilizamos ferramentas qu
 ## Equipe
 Este projeto foi realizado por:
 
-* *Ana Clara Bizarria *
+* *Ana Clara Bizarria*
 * *Byanca Souza*
 * *Jaianny Souza*
 * *Layse Gomes*
