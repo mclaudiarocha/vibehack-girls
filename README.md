@@ -21,6 +21,7 @@ A plataforma coleta e transforma relatos anônimos em indicadores de segurança 
 
 ### Funcionalidades Principais
  *Coleta de relatos anônimos:* Registro de experiências sem a exposição da identidade da usuária.
+ 
  *Índice de Segurança por Empresa:* Agregação de dados para identificação de padrões e classificação de ambientes.
  *Detecção de comportamentos:* IA voltada para identificar a recorrência de problemas por setor ou contexto específico.
  *Proteção contra retaliação:* Sistema onde informações sensíveis só se tornam públicas após atingirem um quórum mínimo de relatos.
