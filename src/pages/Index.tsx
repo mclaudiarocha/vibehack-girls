@@ -43,9 +43,9 @@ const Index = () => {
                   <Link to="/relato">Fazer relato anônimo</Link>
                 </Button>
               </div>
-              <div className="mt-10 flex items-center gap-6 text-xs text-muted-foreground">
-                <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-safe" /> Sem login</span>
-                <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-safe" /> Sem dados pessoais</span>
+              <div className="mt-10 flex items-center gap-6 text-xs text-muted-foreground flex-wrap">
+                <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-safe" /> 100% anônimo</span>
+                <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-safe" /> Sem dados pessoais expostos</span>
                 <span className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-safe" /> Identidade protegida</span>
               </div>
             </div>

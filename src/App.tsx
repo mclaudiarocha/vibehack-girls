@@ -9,6 +9,7 @@ import Companies from "./pages/Companies.tsx";
 import CompanyDetail from "./pages/CompanyDetail.tsx";
 import Report from "./pages/Report.tsx";
 import Support from "./pages/Support.tsx";
+import Login from "./pages/Login.tsx";
 import SupportButton from "./components/SupportButton.tsx";
 import ScrollToTop from "./components/ScrollToTop.tsx";
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/empresa/:slug" element={<CompanyDetail />} />
           <Route path="/relato" element={<Report />} />
           <Route path="/apoio" element={<Support />} />
+          <Route path="/entrar" element={<Login />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
