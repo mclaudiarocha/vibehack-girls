@@ -344,6 +344,11 @@ export interface CompanyScore {
   totalReports: number;
   resolutionRate: number; // 0–1
   patterns: Pattern[];
+  /** Nível de Segurança — métrica única. 0–100, MAIOR = mais arriscado. */
+  riskScore: number;
+  /** Selo "Great Place to Work" — concedido a empresas consistentemente seguras. */
+  trustSeal: boolean;
+  verifiedReports: number;
 }
 
 export function scoreForCompany(slug: string, reports: Report[]): CompanyScore {
@@ -351,6 +356,7 @@ export function scoreForCompany(slug: string, reports: Report[]): CompanyScore {
   const patterns = patternsForCompany(slug, reports);
   const visible = patterns.reduce((s, p) => s + p.count, 0);
   const resolutionRate = resolutionRateForCompany(slug, reports);
+  const verifiedReports = all.filter((r) => r.verified).length;
 
   if (all.length < MIN_THRESHOLD) {
     return {
@@ -360,6 +366,9 @@ export function scoreForCompany(slug: string, reports: Report[]): CompanyScore {
       totalReports: all.length,
       resolutionRate,
       patterns,
+      riskScore: 0,
+      trustSeal: false,
+      verifiedReports,
     };
   }
 
@@ -377,22 +386,46 @@ export function scoreForCompany(slug: string, reports: Report[]): CompanyScore {
 
   const score = Math.max(0, Math.min(100, 100 - penalty + resolutionBonus));
 
-  // Classification considers BOTH score and resolution
-  // Núcleo do critério: empresa só é "segura" se RESOLVE os problemas.
-  // Poucas denúncias sem resolução não bastam.
+  // ===== Nível de Segurança (métrica única) =====
+  // Escala: 0–100, MAIOR = mais arriscado.
+  // Pesos: relato verificado = 2, não verificado = 1.
+  // Combina volume ponderado, gravidade, recorrência e (inversa) taxa de resolução.
+  const weighted = all.reduce((s, r) => s + (r.verified ? 2 : 1), 0);
+  const sevScore = all.reduce(
+    (s, r) => s + (r.severity === "alto" ? 3 : r.severity === "medio" ? 1.5 : 0.5) * (r.verified ? 2 : 1),
+    0
+  );
+  const recScore = all.reduce(
+    (s, r) => s + (r.frequency === "recorrente" ? 1.5 : 0.5) * (r.verified ? 2 : 1),
+    0
+  );
+  // Componentes normalizados (cada um contribui até ~33 pontos antes de ajuste)
+  const volumeComp = Math.min(35, weighted * 1.6);
+  const severityComp = Math.min(35, sevScore * 1.2);
+  const recurrenceComp = Math.min(20, recScore * 0.9);
+  const rawRisk = volumeComp + severityComp + recurrenceComp;
+  // Resolução reduz o risco em até 40%
+  const resolutionRelief = rawRisk * resolutionRate * 0.5;
+  const riskScore = Math.max(0, Math.min(100, Math.round(rawRisk - resolutionRelief)));
+
+  // Classificação única baseada no Nível de Segurança
   let level: ScoreLevel;
-  if (resolutionRate < 0.3) {
-    // Ignora ou não resolve problemas → risco, independente do volume
-    level = "risco";
-  } else if (resolutionRate >= 0.7 && score >= 60) {
-    // Resolve de forma consistente → seguro
-    level = "seguro";
-  } else if (resolutionRate >= 0.5) {
-    // Resolve parcialmente → atenção
-    level = "atencao";
-  } else {
-    level = "atencao";
-  }
+  if (riskScore <= 30) level = "seguro";
+  else if (riskScore <= 50) level = "atencao";
+  else level = "risco";
+
+  // Selo "Great Place to Work" — consistência de segurança:
+  // - Classificada como segura
+  // - Resolução alta (>=70%)
+  // - Volume mínimo de relatos verificados (sinal de presença real, não ausência de dados)
+  // - Sem padrão dominante de gravidade alta
+  const verifiedShare = verifiedReports / totalCount;
+  const trustSeal =
+    level === "seguro" &&
+    resolutionRate >= 0.7 &&
+    totalCount >= 4 &&
+    verifiedShare >= 0.3 &&
+    highRatio <= 0.15;
 
   return {
     level,
@@ -401,6 +434,9 @@ export function scoreForCompany(slug: string, reports: Report[]): CompanyScore {
     totalReports: all.length,
     resolutionRate,
     patterns,
+    riskScore,
+    trustSeal,
+    verifiedReports,
   };
 }
 
