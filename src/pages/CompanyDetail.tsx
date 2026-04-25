@@ -271,6 +271,15 @@ export default function CompanyDetail() {
                             {c.occurrence}
                           </span>
                           <span className="text-xs text-muted-foreground">· {c.sector}</span>
+                          {c.verified ? (
+                            <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full bg-safe/15 text-safe border border-safe/30">
+                              <ShieldCheck className="h-3 w-3" /> ✔️ Verificado
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-full bg-muted text-muted-foreground border border-border">
+                              <ShieldAlert className="h-3 w-3" /> ⚠️ Não verificado
+                            </span>
+                          )}
                         </div>
                         <span className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full border ${RES_STYLE[c.resolution]}`}>
                           <Icon className="h-3.5 w-3.5" />
@@ -280,6 +289,9 @@ export default function CompanyDetail() {
                       <p className="text-sm leading-relaxed text-foreground">"{c.description}"</p>
                       <p className="text-[11px] text-muted-foreground mt-3">
                         Anônimo · {new Date(c.createdAt).toLocaleDateString("pt-BR")}
+                        {c.workedYear && <> · {c.workedYear}</>}
+                        {c.workedArea && <> · {c.workedArea}</>}
+                        {c.tenure && <> · {c.tenure}</>}
                       </p>
                     </li>
                   );
