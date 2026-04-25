@@ -8,35 +8,59 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Íris — soft, feminine, sophisticated */
+    --background: 300 30% 99%;
+    --foreground: 270 25% 18%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 270 25% 18%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 270 25% 18%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Soft purple — petal */
+    --primary: 265 55% 62%;
+    --primary-foreground: 300 30% 99%;
+    --primary-glow: 275 70% 78%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Light pink — support */
+    --secondary: 340 80% 94%;
+    --secondary-foreground: 320 35% 30%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 280 30% 96%;
+    --muted-foreground: 270 12% 48%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 340 70% 90%;
+    --accent-foreground: 320 40% 28%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 280 25% 91%;
+    --input: 280 25% 92%;
+    --ring: 265 55% 62%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
+
+    /* Safety indicators */
+    --safe: 152 45% 55%;
+    --safe-foreground: 0 0% 100%;
+    --warn: 38 90% 60%;
+    --warn-foreground: 30 40% 15%;
+    --risk: 358 70% 60%;
+    --risk-foreground: 0 0% 100%;
+
+    /* Gradients */
+    --gradient-petal: linear-gradient(135deg, hsl(340 80% 88%) 0%, hsl(275 65% 78%) 50%, hsl(260 60% 70%) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(300 60% 98%) 0%, hsl(280 50% 95%) 100%);
+    --gradient-hero: radial-gradient(ellipse at top, hsl(340 80% 94%) 0%, hsl(280 60% 96%) 40%, hsl(300 30% 99%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 8px 30px -12px hsl(265 55% 62% / 0.18);
+    --shadow-petal: 0 20px 60px -20px hsl(275 70% 60% / 0.25);
+    --shadow-glow: 0 0 40px hsl(275 70% 78% / 0.4);
+
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +125,39 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
   }
+
+  h1, h2, h3, .font-display {
+    font-family: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+    font-optical-sizing: auto;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-petal { background: var(--gradient-petal); }
+  .bg-gradient-soft { background: var(--gradient-soft); }
+  .bg-gradient-hero { background: var(--gradient-hero); }
+  .shadow-soft { box-shadow: var(--shadow-soft); }
+  .shadow-petal { box-shadow: var(--shadow-petal); }
+  .shadow-glow { box-shadow: var(--shadow-glow); }
+  .transition-smooth { transition: var(--transition-smooth); }
+
+  @keyframes float-petal {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(2deg); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bloom {
+    0% { opacity: 0; transform: scale(0.85); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  .animate-float { animation: float-petal 6s ease-in-out infinite; }
+  .animate-fade-up { animation: fade-up 0.7s cubic-bezier(0.4, 0, 0.2, 1) both; }
+  .animate-bloom { animation: bloom 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 }
