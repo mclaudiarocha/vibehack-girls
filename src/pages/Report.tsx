@@ -141,7 +141,7 @@ export default function Report() {
         <section className="bg-gradient-hero border-b border-border/60">
           <div className="container py-12 md:py-16 max-w-3xl">
             <span className="inline-flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full bg-card border border-border/60 text-muted-foreground">
-              <Lock className="h-3.5 w-3.5" /> 100% anônimo · sem login · sem dados pessoais
+              <Lock className="h-3.5 w-3.5" /> 100% anônimo · identidade protegida · sem dados pessoais expostos
             </span>
             <h1 className="font-display text-4xl md:text-5xl font-semibold mt-5 leading-[1.05]">
               Seu relato. Sua segurança em primeiro lugar.
