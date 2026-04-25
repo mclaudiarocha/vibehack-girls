@@ -11,17 +11,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { COMPANIES, loadReports, scoreForCompany, SECTORS, type ScoreLevel } from "@/lib/iris";
+import { loadCompanies, loadReports, scoreForCompany, SECTORS, type ScoreLevel } from "@/lib/iris";
 import { Search, ArrowRight } from "lucide-react";
 
 export default function Companies() {
   const reports = useMemo(() => loadReports(), []);
+  const companies = useMemo(() => loadCompanies(), []);
   const [q, setQ] = useState("");
   const [sector, setSector] = useState<string>("todos");
   const [risk, setRisk] = useState<string>("todos");
 
   const data = useMemo(() => {
-    return COMPANIES.map((c) => ({ company: c, score: scoreForCompany(c.slug, reports) }))
+    return companies.map((c) => ({ company: c, score: scoreForCompany(c.slug, reports) }))
       .filter(({ company, score }) => {
         if (q && !company.name.toLowerCase().includes(q.toLowerCase())) return false;
         if (sector !== "todos" && !score.patterns.some((p) => p.sector === sector)) {
@@ -35,7 +36,7 @@ export default function Companies() {
         const order: Record<ScoreLevel, number> = { risco: 0, atencao: 1, seguro: 2, insuficiente: 3 };
         return order[a.score.level] - order[b.score.level];
       });
-  }, [reports, q, sector, risk]);
+  }, [companies, reports, q, sector, risk]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">

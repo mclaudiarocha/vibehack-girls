@@ -14,7 +14,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { addReport, COMPANIES, OCCURRENCES, SECTORS, type Frequency, type Occurrence, type Sector, type Severity } from "@/lib/iris";
+import {
+  addReport,
+  ensureCompany,
+  loadCompanies,
+  OCCURRENCES,
+  SECTORS,
+  RESOLUTION_LABEL,
+  type Frequency,
+  type Occurrence,
+  type Sector,
+  type Severity,
+  type ResolutionStatus,
+} from "@/lib/iris";
 import { Lock, Heart, Check } from "lucide-react";
 import { toast } from "sonner";
 
@@ -26,29 +38,29 @@ export default function Report() {
   const [occurrence, setOccurrence] = useState<Occurrence | "">("");
   const [frequency, setFrequency] = useState<Frequency>("pontual");
   const [severity, setSeverity] = useState<Severity>("medio");
+  const [resolution, setResolution] = useState<ResolutionStatus>("nao_resolvido");
   const [description, setDescription] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [createdSlug, setCreatedSlug] = useState<string>("");
 
   const valid = companyName.trim().length >= 2 && sector && occurrence;
 
-  const slug = useMemo(() => {
-    const trimmed = companyName.trim().toLowerCase();
-    const known = COMPANIES.find((c) => c.name.toLowerCase() === trimmed);
-    if (known) return known.slug;
-    return trimmed.replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-  }, [companyName]);
+  const knownCompanies = useMemo(() => loadCompanies(), []);
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!valid) return;
+    const company = ensureCompany(companyName);
     addReport({
-      companySlug: slug,
+      companySlug: company.slug,
       sector: sector as Sector,
       occurrence: occurrence as Occurrence,
       frequency,
       severity,
+      resolution,
       description: description.trim() || undefined,
     });
+    setCreatedSlug(company.slug);
     setSubmitted(true);
     toast.success("Relato registrado com segurança.");
   }
@@ -67,8 +79,8 @@ export default function Report() {
               Seu relato foi registrado de forma anônima. Ele só ficará visível quando outros relatos similares formarem um padrão — protegendo sua identidade.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-              <Button variant="petal" size="xl" onClick={() => nav(COMPANIES.find(c => c.slug === slug) ? `/empresa/${slug}` : "/empresas")}>
-                Ver empresas
+              <Button variant="petal" size="xl" onClick={() => nav(createdSlug ? `/empresa/${createdSlug}` : "/empresas")}>
+                Ver empresa
               </Button>
               <Button variant="soft" size="xl" onClick={() => nav("/apoio")}>
                 Buscar apoio
@@ -113,8 +125,11 @@ export default function Report() {
                 required
               />
               <datalist id="companies">
-                {COMPANIES.map((c) => <option key={c.slug} value={c.name} />)}
+                {knownCompanies.map((c) => <option key={c.slug} value={c.name} />)}
               </datalist>
+              <p className="text-xs text-muted-foreground">
+                Empresa nova? Pode digitar livremente — ela será adicionada à plataforma.
+              </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-5">
@@ -178,6 +193,27 @@ export default function Report() {
                 maxLength={1000}
               />
               <p className="text-xs text-muted-foreground">{description.length}/1000 · evite incluir dados que possam identificar você.</p>
+            </div>
+
+            <div className="space-y-3">
+              <Label>A empresa tomou alguma ação?</Label>
+              <RadioGroup
+                value={resolution}
+                onValueChange={(v) => setResolution(v as ResolutionStatus)}
+                className="grid grid-cols-1 sm:grid-cols-3 gap-2"
+              >
+                {(["nao_resolvido", "em_andamento", "resolvido"] as ResolutionStatus[]).map((r) => (
+                  <label
+                    key={r}
+                    className={`cursor-pointer rounded-2xl border p-3 text-center text-sm transition-smooth ${
+                      resolution === r ? "border-primary bg-secondary" : "border-border hover:border-primary/40"
+                    }`}
+                  >
+                    <RadioGroupItem value={r} className="sr-only" />
+                    {RESOLUTION_LABEL[r]}
+                  </label>
+                ))}
+              </RadioGroup>
             </div>
 
             <div className="rounded-2xl bg-gradient-soft border border-border/60 p-4 flex gap-3">
