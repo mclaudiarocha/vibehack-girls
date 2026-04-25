@@ -371,12 +371,21 @@ export function scoreForCompany(slug: string, reports: Report[]): CompanyScore {
   const score = Math.max(0, Math.min(100, 100 - penalty + resolutionBonus));
 
   // Classification considers BOTH score and resolution
+  // Núcleo do critério: empresa só é "segura" se RESOLVE os problemas.
+  // Poucas denúncias sem resolução não bastam.
   let level: ScoreLevel;
-  if (resolutionRate >= 0.6 && score >= 65) level = "seguro";
-  else if (resolutionRate < 0.25 && score < 50) level = "risco";
-  else if (score < 45) level = "risco";
-  else if (score < 70) level = "atencao";
-  else level = "seguro";
+  if (resolutionRate < 0.3) {
+    // Ignora ou não resolve problemas → risco, independente do volume
+    level = "risco";
+  } else if (resolutionRate >= 0.7 && score >= 60) {
+    // Resolve de forma consistente → seguro
+    level = "seguro";
+  } else if (resolutionRate >= 0.5) {
+    // Resolve parcialmente → atenção
+    level = "atencao";
+  } else {
+    level = "atencao";
+  }
 
   return {
     level,
