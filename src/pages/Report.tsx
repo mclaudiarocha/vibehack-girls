@@ -16,6 +16,7 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   addReport,
+  buildReportAccessUrl,
   ensureCompany,
   loadCompanies,
   OCCURRENCES,
@@ -26,8 +27,9 @@ import {
   type Sector,
   type Severity,
   type ResolutionStatus,
+  type Report as ReportType,
 } from "@/lib/iris";
-import { Lock, Heart, Check, ShieldCheck, ShieldAlert, LogIn } from "lucide-react";
+import { Lock, Heart, Check, ShieldCheck, ShieldAlert, LogIn, Link2, Copy, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/use-auth";
 import { shouldVerifyReport } from "@/lib/auth";
@@ -49,6 +51,7 @@ export default function Report() {
   const [tenure, setTenure] = useState<string>("");
   const [submitted, setSubmitted] = useState(false);
   const [createdSlug, setCreatedSlug] = useState<string>("");
+  const [createdReport, setCreatedReport] = useState<ReportType | null>(null);
 
   const valid = companyName.trim().length >= 2 && sector && occurrence;
 
@@ -60,7 +63,7 @@ export default function Report() {
     if (!valid) return;
     const company = ensureCompany(companyName);
     const yearNum = workedYear ? parseInt(workedYear, 10) : undefined;
-    addReport({
+    const created = addReport({
       companySlug: company.slug,
       sector: sector as Sector,
       occurrence: occurrence as Occurrence,
@@ -74,11 +77,13 @@ export default function Report() {
       tenure: tenure.trim() || undefined,
     });
     setCreatedSlug(company.slug);
+    setCreatedReport(created);
     setSubmitted(true);
     toast.success("Relato registrado com segurança.");
   }
 
   if (submitted) {
+    const accessUrl = createdReport ? buildReportAccessUrl(createdReport) : "";
     return (
       <div className="min-h-screen bg-background flex flex-col">
         <Header />
@@ -98,6 +103,43 @@ export default function Report() {
                 <><ShieldAlert className="h-3.5 w-3.5 text-warn-foreground" /> ⚠️ Relato não verificado</>
               )}
             </div>
+            {accessUrl && (
+              <div className="mt-8 text-left rounded-2xl bg-card border border-border/60 p-5">
+                <div className="flex items-center gap-2 text-sm font-medium">
+                  <Mail className="h-4 w-4 text-primary" />
+                  Seu link mágico de gerenciamento
+                </div>
+                <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
+                  Enviamos este link para o email que você usou ao entrar. Guarde-o: ele é o
+                  <strong> único modo</strong> de acessar, atualizar ou marcar sua denúncia como resolvida.
+                  Não exige login e não expira.
+                </p>
+                <div className="mt-3 flex items-center gap-2 rounded-xl bg-muted/50 border border-border/60 p-2.5">
+                  <Link2 className="h-4 w-4 text-muted-foreground shrink-0" />
+                  <code className="text-xs truncate flex-1">{accessUrl}</code>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="shrink-0"
+                    onClick={() => {
+                      navigator.clipboard?.writeText(accessUrl);
+                      toast.success("Link copiado.");
+                    }}
+                  >
+                    <Copy className="h-3.5 w-3.5" /> Copiar
+                  </Button>
+                </div>
+                <Button
+                  asChild
+                  variant="soft"
+                  size="sm"
+                  className="mt-3 w-full"
+                >
+                  <Link to={accessUrl.replace(window.location.origin, "")}>Abrir minha denúncia</Link>
+                </Button>
+              </div>
+            )}
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
               <Button variant="petal" size="xl" onClick={() => nav(createdSlug ? `/empresa/${createdSlug}` : "/empresas")}>
                 Ver empresa
