@@ -44,7 +44,7 @@ Para a construção da plataforma e de sua identidade, utilizamos ferramentas qu
 
 * Loveable: Desenvolvimento da interface e estruturação do MVP (Minimum Viable Product).
 * ChatGPT: Engenharia de prompts para lógica do sistema, critérios de análise e estruturação da comunicação.
-* Nano Banna: Criação da logo e identidade visual do projeto.
+* Nano Banana 2: Criação da logo e identidade visual do projeto.
 
 ---
 
