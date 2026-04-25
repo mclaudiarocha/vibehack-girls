@@ -195,6 +195,27 @@ export default function Report() {
               <p className="text-xs text-muted-foreground">{description.length}/1000 · evite incluir dados que possam identificar você.</p>
             </div>
 
+            <div className="space-y-3">
+              <Label>A empresa tomou alguma ação?</Label>
+              <RadioGroup
+                value={resolution}
+                onValueChange={(v) => setResolution(v as ResolutionStatus)}
+                className="grid grid-cols-1 sm:grid-cols-3 gap-2"
+              >
+                {(["nao_resolvido", "em_andamento", "resolvido"] as ResolutionStatus[]).map((r) => (
+                  <label
+                    key={r}
+                    className={`cursor-pointer rounded-2xl border p-3 text-center text-sm transition-smooth ${
+                      resolution === r ? "border-primary bg-secondary" : "border-border hover:border-primary/40"
+                    }`}
+                  >
+                    <RadioGroupItem value={r} className="sr-only" />
+                    {RESOLUTION_LABEL[r]}
+                  </label>
+                ))}
+              </RadioGroup>
+            </div>
+
             <div className="rounded-2xl bg-gradient-soft border border-border/60 p-4 flex gap-3">
               <Heart className="h-5 w-5 text-primary shrink-0 mt-0.5" />
               <p className="text-sm text-muted-foreground leading-relaxed">
