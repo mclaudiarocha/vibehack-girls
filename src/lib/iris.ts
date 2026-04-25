@@ -1,5 +1,3 @@
-import type { LucideIcon } from "lucide-react";
-
 export const MIN_THRESHOLD = 3;
 
 export type Severity = "baixo" | "medio" | "alto";
