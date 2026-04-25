@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -19,10 +19,9 @@ export default function Login() {
   const [submitting, setSubmitting] = useState(false);
 
   // Já autenticado: redireciona
-  if (session) {
-    nav(next, { replace: true });
-    return null;
-  }
+  useEffect(() => {
+    if (session) nav(next, { replace: true });
+  }, [session, next, nav]);
 
   const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
