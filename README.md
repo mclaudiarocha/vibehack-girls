@@ -24,3 +24,26 @@ Além disso:
 Muitas vítimas acreditam que foram casos isolados, permitindo que comportamentos abusivos continuem invisíveis.
 
 ---
+
+## 💡 Solução
+
+A plataforma coleta e transforma relatos anônimos em indicadores de segurança corporativa**, criando um ambiente de transparência coletiva.
+
+### Principais funcionalidades:
+
+🕵️‍♀️ Coleta de relatos anônimos
+  Mulheres podem registrar experiências sem revelar sua identidade.
+
+📊 Geração de Índice de Segurança por empresa
+  Dados são agregados para identificar padrões e classificar o ambiente.
+
+🧠 Detecção de padrões de comportamento
+  Identifica recorrência de problemas por setor ou contexto.
+
+🔒 Proteção contra retaliação (Core do sistema)
+  Informações só são exibidas quando atingem um número mínimo de relatos.
+
+🎯 Apoio à decisão de carreira
+  Usuárias conseguem avaliar empresas antes de aceitar uma proposta.
+
+---
