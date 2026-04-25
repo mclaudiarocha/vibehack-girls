@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { loadCompanies, loadReports, scoreForCompany, SECTORS, type ScoreLevel } from "@/lib/iris";
-import { Search, ArrowRight } from "lucide-react";
+import { Search, ArrowRight, Award } from "lucide-react";
 
 export default function Companies() {
   const reports = useMemo(() => loadReports(), []);
@@ -94,7 +94,14 @@ export default function Companies() {
                 >
                   <div className="flex items-start justify-between gap-3 mb-5">
                     <div>
-                      <h3 className="font-display text-xl font-semibold">{company.name}</h3>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="font-display text-xl font-semibold">{company.name}</h3>
+                        {score.trustSeal && (
+                          <span title="Selo Great Place to Work · Íris" className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-gradient-petal text-primary-foreground">
+                            <Award className="h-3 w-3" /> 🏆
+                          </span>
+                        )}
+                      </div>
                       <p className="text-xs text-muted-foreground mt-1">{company.industry} · {company.size}</p>
                     </div>
                     <ScoreBadge level={score.level} size="sm" />
@@ -105,7 +112,11 @@ export default function Companies() {
                       : "Sem padrões identificados publicamente. Relatos isolados permanecem protegidos."}
                   </p>
                   <div className="mt-5 flex items-center justify-between text-xs text-muted-foreground">
-                    <span>{score.visibleReports} relatos no padrão · últimos 6 meses</span>
+                    <span>
+                      {score.level === "insuficiente"
+                        ? `${score.totalReports} relato(s)`
+                        : <>Nível de Segurança: <strong className="text-foreground">{score.riskScore}</strong> · {score.verifiedReports} verificados</>}
+                    </span>
                     <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-smooth text-primary" />
                   </div>
                 </Link>
