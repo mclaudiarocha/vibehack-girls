@@ -57,6 +57,11 @@ export interface Report {
   workedYear?: number;
   workedArea?: string;
   tenure?: string;
+  // Token de acesso permanente (sem expiração) para que o autor possa
+  // gerenciar o próprio relato via link mágico — sem login, sem identificação.
+  accessToken?: string;
+  // Texto opcional descrevendo como o problema foi resolvido (público).
+  resolutionNote?: string;
 }
 
 export interface Company {
