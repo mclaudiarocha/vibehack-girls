@@ -205,9 +205,20 @@ const SEED: Omit<Report, "id" | "createdAt">[] = [
   { companySlug: "samsung", sector: "Tecnologia", occurrence: "Discriminação de gênero", frequency: "pontual", severity: "medio", resolution: "resolvido" },
   { companySlug: "samsung", sector: "Operações", occurrence: "Ambiente hostil", frequency: "pontual", severity: "baixo", resolution: "em_andamento" },
   // Microsoft — segura
-  { companySlug: "microsoft", sector: "Tecnologia", occurrence: "Ambiente hostil", frequency: "pontual", severity: "baixo", resolution: "resolvido" },
-  { companySlug: "microsoft", sector: "Tecnologia", occurrence: "Salário desigual", frequency: "pontual", severity: "baixo", resolution: "resolvido", description: "Programa de equidade salarial revisa contratações anualmente." },
-  { companySlug: "microsoft", sector: "Tecnologia", occurrence: "Discriminação de gênero", frequency: "pontual", severity: "baixo", resolution: "resolvido" },
+  { companySlug: "microsoft", sector: "Tecnologia", occurrence: "Ambiente hostil", frequency: "pontual", severity: "baixo", resolution: "resolvido", verified: true },
+  { companySlug: "microsoft", sector: "Tecnologia", occurrence: "Salário desigual", frequency: "pontual", severity: "baixo", resolution: "resolvido", description: "Programa de equidade salarial revisa contratações anualmente.", verified: true },
+  { companySlug: "microsoft", sector: "Tecnologia", occurrence: "Discriminação de gênero", frequency: "pontual", severity: "baixo", resolution: "resolvido", verified: true },
+  { companySlug: "microsoft", sector: "Tecnologia", occurrence: "Ambiente hostil", frequency: "pontual", severity: "baixo", resolution: "resolvido", verified: true },
+  // Apple — reforça selo
+  { companySlug: "apple", sector: "Tecnologia", occurrence: "Ambiente hostil", frequency: "pontual", severity: "baixo", resolution: "resolvido", verified: true },
+  { companySlug: "apple", sector: "Marketing", occurrence: "Discriminação de gênero", frequency: "pontual", severity: "baixo", resolution: "resolvido", verified: true },
+  // Google — alguns verificados
+  { companySlug: "google", sector: "Tecnologia", occurrence: "Ambiente hostil", frequency: "pontual", severity: "baixo", resolution: "resolvido", verified: true },
+  { companySlug: "google", sector: "Tecnologia", occurrence: "Salário desigual", frequency: "pontual", severity: "baixo", resolution: "resolvido", verified: true },
+  // AuroraTech — relato verificado de gravidade alta (peso maior)
+  { companySlug: "auroratech", sector: "Tecnologia", occurrence: "Assédio moral", frequency: "recorrente", severity: "alto", resolution: "nao_resolvido", verified: true, description: "Verificado por colaboradora atual: padrão se repete entre líderes." },
+  // Ambev — relato verificado
+  { companySlug: "ambev", sector: "Vendas", occurrence: "Assédio moral", frequency: "recorrente", severity: "alto", resolution: "nao_resolvido", verified: true },
 ];
 
 function nowMinusDays(days: number) {
