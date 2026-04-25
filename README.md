@@ -1,9 +1,9 @@
-# Plataforma de Transparência Corporativa Coletiva
+# Íris - Plataforma de Transparência Corporativa Coletiva
 
 > "Transformando o silêncio individual em dados coletivos para tornar o ambiente de trabalho mais seguro para mulheres."
 
 ## Sobre o Projeto
-Este projeto foi desenvolvido durante o Vibehack Grrl, com o propósito de aplicar inteligência artificial na resolução de problemas críticos de segurança e cultura organizacional para mulheres.
+Este projeto foi desenvolvido durante o Vibehack Grrrl, com o propósito de aplicar inteligência artificial na resolução de problemas críticos de segurança e cultura organizacional para mulheres.
 
 A plataforma foi criada para tornar a segurança no ambiente de trabalho mensurável e transparente. O foco principal é mitigar o medo de retaliação ao denunciar situações de assédio ou comportamento inadequado. A solução opera como um sistema de reputação corporativa baseado em dados anônimos, permitindo que mulheres tomem decisões de carreira fundamentadas.
 
