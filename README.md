@@ -47,3 +47,62 @@ A plataforma coleta e transforma relatos anônimos em indicadores de segurança 
   Usuárias conseguem avaliar empresas antes de aceitar uma proposta.
 
 ---
+
+## ⚙️ Como Funciona
+
+### 1. Coleta de Dados
+
+Formulário estruturado com:
+
+ Empresa
+ Setor
+ Tipo de ocorrência
+ Frequência
+ Gravidade
+
+---
+
+### 2. Regra de Proteção (Diferencial)
+
+ Menos de 3 relatos → **não exibido publicamente**
+ 3 ou mais relatos similares → **alerta ativado**
+
+Isso garante segurança para quem contribui.
+
+---
+
+### 3. Cálculo do Índice
+
+O sistema gera um score baseado em recorrência e gravidade:
+
+ 🟢 Seguro
+ 🟡 Atenção
+ 🔴 Risco
+
+---
+
+### 4. Visualização
+
+Interface com:
+
+ Cards de empresas
+ Indicadores visuais de risco
+
+---
+
+## 🚫 O que o projeto NÃO é
+
+ Não é uma rede social
+ Não é um canal jurídico formal
+ Não expõe indivíduos
+ Não publica denúncias isoladas
+ Não resolve casos individualmente
+
+---
+
+## 🎯 Público-Alvo
+
+ Mulheres entre 18 e 35 anos
+ Universitárias e recém-formadas
+ Profissionais em início ou transição de carreira
+ Mulheres que já vivenciaram ambientes tóxicos
