@@ -50,6 +50,13 @@ export interface Report {
   resolution: ResolutionStatus;
   description?: string;
   createdAt: string;
+  // Anonimato preservado: nunca expor email no frontend.
+  // Apenas o flag verified é derivado no momento do registro.
+  verified?: boolean;
+  // Campos opcionais para ex-funcionárias (contexto, sem identificação)
+  workedYear?: number;
+  workedArea?: string;
+  tenure?: string;
 }
 
 export interface Company {
