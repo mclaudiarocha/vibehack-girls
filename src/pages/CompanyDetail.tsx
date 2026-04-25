@@ -52,7 +52,6 @@ export default function CompanyDetail() {
   const allOccurrences = allOccurrencesForCompany(company.slug, reports);
   const comments = commentsForCompany(company.slug, reports);
   const resolvedPct = Math.round(score.resolutionRate * 100);
-  const sufficient = score.level !== "insuficiente";
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
