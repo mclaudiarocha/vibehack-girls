@@ -15,7 +15,7 @@ import {
   RESOLUTION_LABEL,
   type ResolutionStatus,
 } from "@/lib/iris";
-import { ArrowLeft, ShieldCheck, Lock, Sparkles, MessageCircle, CheckCircle2, Clock, XCircle } from "lucide-react";
+import { ArrowLeft, ShieldCheck, Lock, Sparkles, MessageCircle, CheckCircle2, Clock, XCircle, Award, ShieldAlert } from "lucide-react";
 
 const RES_ICON: Record<ResolutionStatus, React.ComponentType<{ className?: string }>> = {
   resolvido: CheckCircle2,
@@ -52,6 +52,7 @@ export default function CompanyDetail() {
   const allOccurrences = allOccurrencesForCompany(company.slug, reports);
   const comments = commentsForCompany(company.slug, reports);
   const resolvedPct = Math.round(score.resolutionRate * 100);
+  const sufficient = score.level !== "insuficiente";
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -66,6 +67,11 @@ export default function CompanyDetail() {
               <div>
                 <p className="text-sm text-muted-foreground mb-2">{company.industry} · {company.size}</p>
                 <h1 className="font-display text-4xl md:text-5xl font-semibold">{company.name}</h1>
+                {score.trustSeal && (
+                  <span className="mt-3 inline-flex items-center gap-2 text-sm font-semibold px-3.5 py-1.5 rounded-full bg-gradient-petal text-primary-foreground shadow-petal">
+                    <Award className="h-4 w-4" /> 🏆 Great Place to Work · Íris
+                  </span>
+                )}
               </div>
               <ScoreBadge level={score.level} size="lg" />
             </div>
@@ -75,9 +81,9 @@ export default function CompanyDetail() {
         <section className="container py-10 grid gap-6 lg:grid-cols-3">
           {/* Score card */}
           <div className="lg:col-span-2 rounded-3xl bg-card border border-border/60 p-8 shadow-soft animate-fade-up">
-            <h2 className="font-display text-2xl font-semibold mb-1">Índice de Segurança</h2>
+            <h2 className="font-display text-2xl font-semibold mb-1">Nível de Segurança</h2>
             <p className="text-sm text-muted-foreground mb-6">
-              Considera volume, frequência, gravidade e <strong>taxa de resolução</strong> dos relatos.
+              Métrica única (0–100). <strong>Quanto menor, mais seguro</strong>. Relatos verificados pesam o dobro.
             </p>
 
             {score.level === "insuficiente" ? (
@@ -90,18 +96,46 @@ export default function CompanyDetail() {
               </div>
             ) : (
               <>
-                <div className="flex items-end gap-4 mb-6">
-                  <div className="font-display text-6xl font-semibold leading-none">{score.score}</div>
+                <div className="flex items-end gap-4 mb-3">
+                  <div className="font-display text-6xl font-semibold leading-none">{score.riskScore}</div>
                   <div className="text-sm text-muted-foreground pb-2">/ 100 · {LEVEL_LABEL[score.level]}</div>
                 </div>
-                <div className="h-3 rounded-full bg-muted overflow-hidden mb-8">
+                <div className="h-3 rounded-full bg-muted overflow-hidden mb-2 relative">
                   <div
                     className={`h-full rounded-full transition-smooth ${
                       score.level === "seguro" ? "bg-safe" : score.level === "atencao" ? "bg-warn" : "bg-risk"
                     }`}
-                    style={{ width: `${score.score}%` }}
+                    style={{ width: `${score.riskScore}%` }}
                   />
                 </div>
+                <div className="flex justify-between text-[11px] text-muted-foreground mb-6">
+                  <span>≤ 30 Seguro</span>
+                  <span>31–50 Atenção</span>
+                  <span>&gt; 50 Risco</span>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-muted border border-border/60">
+                    {score.totalReports} relatos no total
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-safe/10 border border-safe/30 text-safe">
+                    <ShieldCheck className="h-3.5 w-3.5" /> {score.verifiedReports} verificados
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-muted border border-border/60 text-muted-foreground">
+                    <ShieldAlert className="h-3.5 w-3.5" /> {score.totalReports - score.verifiedReports} não verificados
+                  </span>
+                </div>
+
+                {score.trustSeal && (
+                  <div className="rounded-2xl bg-gradient-soft border border-safe/30 p-5 mb-6 flex items-start gap-3">
+                    <Award className="h-6 w-6 text-safe shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-display text-base font-semibold">🏆 Selo Great Place to Work · Íris</p>
+                      <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
+                        Reconhecimento por <strong>consistência</strong>: relatos verificados, alta taxa de resolução e ausência de padrões graves recorrentes.
+                      </p>
+                    </div>
+                  </div>
+                )}
 
                 {/* Resolution rate */}
                 <div className="rounded-2xl bg-muted/50 p-5 mb-6">
@@ -192,8 +226,8 @@ export default function CompanyDetail() {
               <ShieldCheck className="h-5 w-5 text-primary mb-2" />
               <p className="font-display text-lg font-semibold mb-1">Como o índice é calculado</p>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Combinamos volume, recorrência e gravidade dos relatos com a <strong>taxa de resolução</strong>.
-                Empresas que agem sobre os problemas recuperam pontos.
+                Volume ponderado (verificado = 2, não verificado = 1), gravidade, recorrência e <strong>taxa de resolução</strong>.
+                Resultado é um número de 0 a 100 — quanto menor, mais seguro.
               </p>
             </div>
             <div className="rounded-3xl bg-gradient-soft border border-border/60 p-6">
