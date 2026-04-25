@@ -72,7 +72,7 @@ const Index = () => {
               {
                 icon: Lock,
                 title: "Anonimato real",
-                desc: "Não pedimos seu nome, seu e-mail ou seu cargo. Não há login. Não há rastros.",
+                desc: "Seu nome e dados não são exibidos. Mesmo com login, seus relatos permanecem anônimos.",
               },
               {
                 icon: Layers,
