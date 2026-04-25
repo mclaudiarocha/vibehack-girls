@@ -1,108 +1,65 @@
-# 💜 Plataforma de Transparência Corporativa Coletiva
 
- “Transformando o silêncio individual em dados coletivos para tornar o ambiente de trabalho mais seguro para mulheres.”
+# Plataforma de Transparência Corporativa Coletiva
 
-## 📌 Sobre o Projeto
+> "Transformando o silêncio individual em dados coletivos para tornar o ambiente de trabalho mais seguro para mulheres."
 
-Esta plataforma foi criada com o objetivo de tornar a segurança no ambiente de trabalho **mensurável e transparente para mulheres**, especialmente diante do medo de retaliação ao denunciar situações de assédio ou comportamento inadequado.
+## Contexto do Projeto
+Este projeto foi desenvolvido durante o *Hackathon Grrl*, com o propósito de aplicar tecnologia e inteligência de dados na resolução de problemas críticos de segurança e cultura organizacional para mulheres.
 
-A solução funciona como um sistema de **reputação corporativa baseado em dados anônimos**, permitindo que mulheres tomem decisões mais informadas antes de ingressar em uma empresa.
+## Sobre o Projeto
+A plataforma foi criada para tornar a segurança no ambiente de trabalho mensurável e transparente. O foco principal é mitigar o medo de retaliação ao denunciar situações de assédio ou comportamento inadequado. A solução opera como um sistema de reputação corporativa baseado em dados anônimos, permitindo que mulheres tomem decisões de carreira fundamentadas.
 
----
+## Problema
+Mulheres enfrentam barreiras estruturais no mercado de trabalho:
+ *Invisibilidade:* Muitas vítimas acreditam que seus relatos são casos isolados, permitindo a continuidade de comportamentos abusivos.
+ *Falta de Transparência:* Ausência de dados reais sobre a cultura interna das empresas antes da contratação.
+ *Medo de Retaliação:* Receio de sofrer consequências profissionais ao utilizar canais de denúncia tradicionais.
+ *Informações Fragmentadas:* Decisões de carreira baseadas em percepções superficiais ou incompletas.
 
-## ❗ Problema
+## Solução
+A plataforma coleta e transforma relatos anônimos em indicadores de segurança corporativa, criando uma rede de proteção e transparência.
 
-Hoje, mulheres enfrentam:
+### Funcionalidades Principais
+ *Coleta de relatos anônimos:* Registro de experiências sem a exposição da identidade da usuária.
+ *Índice de Segurança por Empresa:* Agregação de dados para identificação de padrões e classificação de ambientes.
+ *Detecção de comportamentos:* IA voltada para identificar a recorrência de problemas por setor ou contexto específico.
+ *Proteção contra retaliação:* Sistema onde informações sensíveis só se tornam públicas após atingirem um quórum mínimo de relatos.
+ *Apoio à decisão:* Ferramenta para avaliação de empresas antes do aceite de propostas de emprego.
 
-Falta de transparência sobre a cultura real das empresas
-Medo de retaliação ao denunciar assédio
-Ausência de dados confiáveis sobre segurança no trabalho
-Decisões de carreira baseadas em informações incompletas
+## Desenvolvimento e Tecnologias
+Para a construção da plataforma e de sua identidade, utilizamos ferramentas que integram agilidade e design:
+ *Loveable:* Utilizado para o desenvolvimento da interface e estruturação do MVP (Minimum Viable Product).
+ *ChatGPT:* Utilizado na engenharia de prompts para criar a lógica do sistema, definir critérios de análise e estruturar a comunicação.
+ *Nano Banna:* Utilizado para a criação da logo e de toda a identidade visual do projeto, garantindo uma comunicação clara e acolhedora.
 
-Além disso:
+## Como Funciona
+1.  *Coleta de Dados:* Formulário estruturado abrangendo empresa, setor, tipo de ocorrência, frequência e gravidade.
+2.  *Regra de Proteção (Diferencial):* Relatos com menos de 3 ocorrências similares não são exibidos publicamente para proteger a anonimidade da fonte. O alerta só é ativado após a recorrência comprovada.
+3.  *Cálculo do Índice:* O sistema gera um score (Seguro, Atenção ou Risco) baseado na gravidade e frequência dos dados coletados.
+4.  *Visualização:* Interface intuitiva com cards de empresas e indicadores visuais de risco.
 
-Muitas vítimas acreditam que foram casos isolados, permitindo que comportamentos abusivos continuem invisíveis.
+## O que o projeto NÃO é
+ Não é uma rede social de desabafo.
+ Não é um canal jurídico formal.
+ Não expõe indivíduos nominalmente.
+ Não publica denúncias isoladas sem o quórum de segurança.
+ Não resolve casos individualmente, mas sim foca na saúde do ambiente coletivo.
 
----
-
-## 💡 Solução
-
-A plataforma coleta e transforma relatos anônimos em indicadores de segurança corporativa**, criando um ambiente de transparência coletiva.
-
-### Principais funcionalidades:
-
-🕵️‍♀️ Coleta de relatos anônimos
-  Mulheres podem registrar experiências sem revelar sua identidade.
-
-📊 Geração de Índice de Segurança por empresa
-  Dados são agregados para identificar padrões e classificar o ambiente.
-
-🧠 Detecção de padrões de comportamento
-  Identifica recorrência de problemas por setor ou contexto.
-
-🔒 Proteção contra retaliação (Core do sistema)
-  Informações só são exibidas quando atingem um número mínimo de relatos.
-
-🎯 Apoio à decisão de carreira
-  Usuárias conseguem avaliar empresas antes de aceitar uma proposta.
-
----
-
-## ⚙️ Como Funciona
-
-### 1. Coleta de Dados
-
-Formulário estruturado com:
-
- Empresa
- Setor
- Tipo de ocorrência
- Frequência
- Gravidade
+## Público-Alvo
+ Mulheres entre 18 e 35 anos.
+ Universitárias e recém-formadas em busca do primeiro emprego.
+ Profissionais em transição de carreira.
+ Mulheres que buscam ambientes de trabalho com cultura comprovadamente ética.
 
 ---
 
-### 2. Regra de Proteção (Diferencial)
+## Equipe
+Este projeto foi realizado por:
 
- Menos de 3 relatos → **não exibido publicamente**
- 3 ou mais relatos similares → **alerta ativado**
-
-Isso garante segurança para quem contribui.
-
----
-
-### 3. Cálculo do Índice
-
-O sistema gera um score baseado em recorrência e gravidade:
-
- 🟢 Seguro
- 🟡 Atenção
- 🔴 Risco
+* *Ana Clara Bizarria *
+* *Byanca Souza*
+* *Jaianny Souza*
+* *Layse Gomes*
+* *Maria Claudia Rocha*
 
 ---
-
-### 4. Visualização
-
-Interface com:
-
- Cards de empresas
- Indicadores visuais de risco
-
----
-
-## 🚫 O que o projeto NÃO é
-
- Não é uma rede social
- Não é um canal jurídico formal
- Não expõe indivíduos
- Não publica denúncias isoladas
- Não resolve casos individualmente
-
----
-
-## 🎯 Público-Alvo
-
- Mulheres entre 18 e 35 anos
- Universitárias e recém-formadas
- Profissionais em início ou transição de carreira
- Mulheres que já vivenciaram ambientes tóxicos
