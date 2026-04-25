@@ -286,6 +286,16 @@ export default function CompanyDetail() {
                         </span>
                       </div>
                       <p className="text-sm leading-relaxed text-foreground">"{c.description}"</p>
+                      {c.resolution === "resolvido" && c.resolutionNote && (
+                        <div className="mt-3 rounded-xl bg-safe/10 border border-safe/30 p-3">
+                          <p className="text-[11px] font-medium text-safe uppercase tracking-wide mb-1">
+                            Como foi resolvido
+                          </p>
+                          <p className="text-sm leading-relaxed text-foreground">
+                            {c.resolutionNote}
+                          </p>
+                        </div>
+                      )}
                       <p className="text-[11px] text-muted-foreground mt-3">
                         Anônimo · {new Date(c.createdAt).toLocaleDateString("pt-BR")}
                         {c.workedYear && <> · {c.workedYear}</>}
