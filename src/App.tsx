@@ -10,6 +10,7 @@ import CompanyDetail from "./pages/CompanyDetail.tsx";
 import Report from "./pages/Report.tsx";
 import Support from "./pages/Support.tsx";
 import SupportButton from "./components/SupportButton.tsx";
+import ScrollToTop from "./components/ScrollToTop.tsx";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/empresas" element={<Companies />} />
