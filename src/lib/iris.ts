@@ -261,10 +261,64 @@ export function addReport(r: Omit<Report, "id" | "createdAt">): Report {
     ...r,
     id: `r-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
     createdAt: new Date().toISOString(),
+    accessToken: r.accessToken ?? generateAccessToken(),
   };
   const next = [created, ...all];
   localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   return created;
+}
+
+// ---------- Acesso por link mágico (token permanente) ----------
+
+/** Gera um token único, seguro e não previsível usando crypto.randomUUID quando disponível. */
+export function generateAccessToken(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return `${crypto.randomUUID()}-${crypto.randomUUID()}`.replace(/-/g, "");
+  }
+  // Fallback: 32 chars aleatórios
+  return Array.from({ length: 4 }, () => Math.random().toString(36).slice(2, 12)).join("");
+}
+
+/** Busca um relato por ID. */
+export function getReportById(id: string): Report | undefined {
+  return loadReports().find((r) => r.id === id);
+}
+
+/** Valida se o token corresponde ao relato. Comparação simples por igualdade. */
+export function validateReportToken(id: string, token: string | null | undefined): Report | null {
+  if (!token) return null;
+  const report = getReportById(id);
+  if (!report || !report.accessToken) return null;
+  return report.accessToken === token ? report : null;
+}
+
+/** Atualiza um relato (apenas campos permitidos pelo autor). */
+export function updateReport(
+  id: string,
+  patch: Partial<Pick<Report, "resolution" | "resolutionNote" | "description">>,
+): Report | null {
+  const all = loadReports();
+  const idx = all.findIndex((r) => r.id === id);
+  if (idx === -1) return null;
+  const updated: Report = { ...all[idx], ...patch };
+  all[idx] = updated;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+  return updated;
+}
+
+/** Remove um relato. */
+export function deleteReport(id: string): boolean {
+  const all = loadReports();
+  const next = all.filter((r) => r.id !== id);
+  if (next.length === all.length) return false;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  return true;
+}
+
+/** Constrói o link mágico de gerenciamento da denúncia. */
+export function buildReportAccessUrl(report: Pick<Report, "id" | "accessToken">): string {
+  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  return `${origin}/minha-denuncia/${report.id}?token=${report.accessToken ?? ""}`;
 }
 
 // ---------- Aggregations ----------
