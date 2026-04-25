@@ -84,7 +84,7 @@ const SEED_COMPANIES: Company[] = [
 ];
 
 const COMPANIES_KEY = "iris.companies.v1";
-const STORAGE_KEY = "iris.reports.v2";
+const STORAGE_KEY = "iris.reports.v3";
 
 export function loadCompanies(): Company[] {
   if (typeof window === "undefined") return SEED_COMPANIES;
